@@ -7,3 +7,5 @@ npm install react-navigation-stack @react-native-community/masked-view react-nat
 react-native link react-native-linear-gradient
 yarn add react-native-linear-gradient
 expo install expo-linear-gradient
+
+yarn add react-native-webview

@@ -12,8 +12,8 @@ import {
  
 export default function Log({ navigation }) {
 
-    const pressEmail = () => {
-        navigation.navigate('LogIn');
+    const pressWebView = () => {
+        navigation.navigate('LogWeb');
     }
 
     return (
@@ -52,7 +52,7 @@ export default function Log({ navigation }) {
                 <TouchableOpacity 
                     style={styles.buttonContainer}
                     background={TouchableNativeFeedback.Ripple('black',false)}
-                    onPress={pressEmail}
+                    onPress={pressWebView}
                 >
                     <View style={styles.contenu}>
                         <Image style={styles.icon}
