@@ -21,6 +21,9 @@ export default function Log({ navigation }) {
             <View style={styles.main}>
                 <Image style={styles.logo}
                 source={require('../../assets/reddit_logo2.png')} />
+                <Text style={styles.titleText}>
+                    Redditech
+                </Text>
 
                 {/* <TouchableOpacity 
                     style={styles.buttonContainer}
@@ -48,7 +51,7 @@ export default function Log({ navigation }) {
                         start={{x: 0, y: 0.75}} end={{x: 1, y: 0.25}}
                         colors={['#DE190B', '#DE7502']} 
                         style={styles.button}>
-                        <Text style={styles.Sign}> Sign In </Text>
+                        <Text style={styles.Sign}> Sign In / Sign Up </Text>
                     </LinearGradient>
                 </TouchableOpacity>
 
@@ -71,10 +74,16 @@ const styles = StyleSheet.create({
     logo: {
         padding: 30,
         marginTop: '30%',
-        marginLeft: '40%',
-        marginBottom: '20%',
+        marginLeft: '42%',
+        marginBottom: '5%',
         height: 70,
         width: 70,
+    },
+    titleText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: 'white',    
     },
     buttonContainer: {
         marginLeft: 20,
@@ -97,7 +106,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         paddingVertical: 10,
-        marginTop: '98%',
+        marginTop: '40%',
         height: 50,
         borderRadius: 40,
         alignItems: 'center',
