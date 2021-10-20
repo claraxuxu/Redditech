@@ -1,41 +1,50 @@
-import React, { useCallback } from 'react';
-import { Linking, StyleSheet } from 'react-native';
+import React from 'react';
+import { useCallback } from 'react';
 import { authorize } from 'react-native-app-auth';
+import { Button, View, StyleSheet } from 'react-native'
 
 const config = {
-    redirectUrl: 'com.epicture://oauth2redirect/reddit',
-    clientId: 'QzIXD5c6dy5sVJC_Yy81pg',
-    clientSecret: '', // empty string - needed for iOS
-    scopes: ['identity'],
-    serviceConfiguration: {
-      authorizationEndpoint: 'https://www.reddit.com/api/v1/authorize.compact',
-      tokenEndpoint: 'https://www.reddit.com/api/v1/access_token',
+  redirectUrl: 'com.epicture://oauth2redirect/reddit',
+  clientId: 'QzIXD5c6dy5sVJC_Yy81pg',
+  clientSecret: '', // empty string - needed for iOS
+  scopes: ['identity'],
+  serviceConfiguration: {
+    authorizationEndpoint: 'https://www.reddit.com/api/v1/authorize.compact',
+    tokenEndpoint: 'https://www.reddit.com/api/v1/access_token',
+  },
+  customHeaders: {
+    token: {
+      Authorization: 'Basic UXpJWEQ1YzZkeTVzVkpDX1l5ODFwZw==',
     },
-    customHeaders: {
-      token: {
-        Authorization: 'Basic UXpJWEQ1YzZkeTVzVkpDX1l5ODFwZw==',
-      },
-    },
-  };
+  },
+};
 
-const getToken = useCallback(
+const Logweb = () => {
+  const getToken = useCallback(
     async lave => {
         try {
             const authState = await authorize(config);
         }
         catch(e) {
-
+          console.log(e)
         }
     },
-)
-
-export default LogWeb = () => {
-    <Button
-        onPress = {() => {getToken()}}>
-    </Button>
+  )
+  return (
+    <View style={styles.button}>
+      <Button
+        title= 'Log in'
+        onPress= {() => {getToken()}}
+        color= 'red'
+      />
+    </View>
+  );
 }
+
 const styles = StyleSheet.create({
-    entire: {
-        marginTop: 20
-    }
+  button : {
+    marginTop: '50%'
+  }
 });
+
+export default Logweb
