@@ -8,6 +8,7 @@
 
 import React from 'react';
 import {
+  Button,
   View,
 } from 'react-native';
 import LogWeb from './LogWeb';
@@ -16,6 +17,10 @@ const App = () => {
   return (
     <View>
       <LogWeb></LogWeb>
+      <Button
+        title= 'test'
+        onPress= {() => {console.log(global.authState)}}
+      />
     </View>
   );
 }

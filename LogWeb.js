@@ -23,7 +23,7 @@ const Logweb = () => {
   const getToken = useCallback(
     async lave => {
         try {
-            const authState = await authorize(config);
+            global.authState = await authorize(config);
         }
         catch(e) {
           console.log(e)
