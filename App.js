@@ -6,22 +6,23 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {
-  Button,
-  View,
-} from 'react-native';
-import LogWeb from './LogWeb';
+import * as React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import LogWeb from './component/LogWeb';
+import Home from './component/Home';
 
-const App = () => {
-  return (
-    <View>
-      <LogWeb></LogWeb>
-      <Button
-        title= 'test'
-        onPress= {() => {console.log(global.authState)}}
-      />
-    </View>
-  );
+const Stack = createNativeStackNavigator();
+
+function App() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen options={{ headerShown: false }} name="LogWeb" component={LogWeb} />
+                <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
 }
+
 export default App;
