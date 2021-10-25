@@ -12,7 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LogWeb from './component/LogWeb';
 import Home from './component/Home';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Profile from './component/Profile';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -24,6 +24,7 @@ function App() {
             <Tabs.Navigator>
                 <Tabs.Screen options={{ headerShown: false }} name="Home" component={Home} />
                 <Tabs.Screen options={{ headerShown: false }} name="Log" component={LogWeb} />
+                <Tabs.Screen options={{ headerShown: false}} name="Profile" component={Profile} />
             </Tabs.Navigator>
         </NavigationContainer>
     )
