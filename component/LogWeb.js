@@ -31,6 +31,8 @@ const Logweb = ({ navigation }) => {
         try {
             global.authState = await authorize(config);
             console.log(authState)
+            authState => authState.json()
+            console.log(authState.accessToken)
             setLogged(true)
         }
         catch(e) {

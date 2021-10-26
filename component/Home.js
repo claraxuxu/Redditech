@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputView:{
-    marginTop: '10%',
+    marginTop: '2%',
     width:"80%",
     backgroundColor:"#465881",
     borderRadius:15,
