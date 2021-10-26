@@ -9,18 +9,22 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LogWeb from './component/LogWeb';
 import Home from './component/Home';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createNativeStackNavigator();
+const Tabs = createBottomTabNavigator();
 
 function App() {
+
     return (
         <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen options={{ headerShown: false }} name="LogWeb" component={LogWeb} />
-                <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
-            </Stack.Navigator>
+            <Tabs.Navigator>
+                <Tabs.Screen options={{ headerShown: false }} name="Home" component={Home} />
+                <Tabs.Screen options={{ headerShown: false }} name="Log" component={LogWeb} />
+            </Tabs.Navigator>
         </NavigationContainer>
     )
 }

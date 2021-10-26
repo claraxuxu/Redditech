@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCallback } from 'react';
 import { authorize } from 'react-native-app-auth';
 import { Image, TouchableOpacity, 
           View, Text, StyleSheet,
           StatusBar } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Home from './Home';
 
 const config = {
   redirectUrl: 'com.epicture://oauth2redirect/reddit',
@@ -23,14 +24,14 @@ const config = {
 };
 
 const Logweb = ({ navigation }) => {
+
+  const [isLogged, setLogged] = useState(false);
   const getToken = useCallback(
     async lave => {
         try {
             global.authState = await authorize(config);
             console.log(authState)
-            if (global.authState)
-              navigation.push("Home");
-            // console.log("authState.accessToken")
+            setLogged(true)
         }
         catch(e) {
           console.log(e)
@@ -38,52 +39,80 @@ const Logweb = ({ navigation }) => {
     },
   )
 
-  return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        backgroundColor="#000"/>
-      <Image style={styles.logo}
-        source={require('../assets/reddit_logo.png')} />
+  if (isLogged === true) {
+    return (
+      <View style={styles.container}>
+        <StatusBar
+          translucent 
+          animated={true}/>
+        <Image style={styles.logo}
+          source={require('../assets/reddit_logo.png')} />
+        <TouchableOpacity
+          onPress= {() => {setLogged(false)}}
+        >
+          <LinearGradient
+            start={{x: 0, y: 0.75}}
+            end={{x: 1, y: 0.25}}
+            colors={['#40DBDB', '#40A6DB', '#40DBDB']}
+            style={styles.button}>
+            <Text style={styles.textButton}>LOG IN</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+  else {
+    return (
+      <View style={styles.container}>
+        <StatusBar
+          translucent 
+          animated={true}/>
+        <Image style={styles.logo}
+          source={require('../assets/reddit_blue.png')} />
+        <Text style={styles.name}>Redditech</Text>
 
-      <TouchableOpacity
-        onPress= {() => {getToken()}}
-      >
-        <LinearGradient
-          start={{x: 0, y: 0.75}}
-          end={{x: 1, y: 0.25}}
-          colors={['#DE190B', '#DE7502']}
-          style={styles.button}>
-          <Text style={styles.textButton}>LOG IN</Text>
-        </LinearGradient>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress= {() => {getToken()}}
+        >
+          <LinearGradient
+            start={{x: 0, y: 0.75}}
+            end={{x: 1, y: 0.25}}
+            colors={['#465881', '#40A6DB']}
+            style={styles.button}>
+            <Text style={styles.textButton}>LOG IN</Text>
+          </LinearGradient>
+        </TouchableOpacity>
 
-      <Text style={styles.signin}>
-          By continuing you agree to our {"\n"}
-          User Agreement and Privacy Policy{"\n"}
-      </Text>
-    </View>
-  );
+        <Text style={styles.signin}>
+            By continuing you agree to our {"\n"}
+            User Agreement and Privacy Policy{"\n"}
+        </Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000"
+    backgroundColor: "#FCFCFB",
+    alignItems: 'center'
   },
   logo: {
     padding: 30,
     marginTop: '30%',
-    marginLeft: '40%',
-    marginBottom: '50%',
-    height: 70,
-    width: 70,
+    marginBottom: '3%',
+    height: 200,
+    width: 200,
+  },
+  name: {
+    fontFamily: 'Comfortaa-Bold',
+    fontSize: 30,
+    color: '#40A6DB',
+    marginBottom: '60%',
   },
   button : {
-    marginTop: 10,
-    marginRight: "2%",
-    marginLeft: "2%",
-    paddingVertical: 10,
+    width: 300,
     height: 50,
     borderRadius: 40,
     alignItems: 'center',
