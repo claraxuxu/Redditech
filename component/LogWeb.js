@@ -5,7 +5,7 @@ import { Image, TouchableOpacity,
           View, Text, StyleSheet,
           StatusBar } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Home from './Home';
+import Profile from './Profile';
 
 const config = {
   redirectUrl: 'com.epicture://oauth2redirect/reddit',
@@ -30,9 +30,17 @@ const Logweb = ({ navigation }) => {
     async lave => {
         try {
             global.authState = await authorize(config);
-            console.log(authState)
             authState => authState.json()
-            console.log(authState.accessToken)
+            const res = await fetch('https://oauth.reddit.com/api/v1/me', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer ' + global.authState.accessToken,
+              }
+            });
+            console.log(res)
+            global.resBody = await res.json();
+            console.log(resBody)
             setLogged(true)
         }
         catch(e) {
@@ -43,24 +51,7 @@ const Logweb = ({ navigation }) => {
 
   if (isLogged === true) {
     return (
-      <View style={styles.container}>
-        <StatusBar
-          translucent 
-          animated={true}/>
-        <Image style={styles.logo}
-          source={require('../assets/reddit_logo.png')} />
-        <TouchableOpacity
-          onPress= {() => {setLogged(false)}}
-        >
-          <LinearGradient
-            start={{x: 0, y: 0.75}}
-            end={{x: 1, y: 0.25}}
-            colors={['#40DBDB', '#40A6DB', '#40DBDB']}
-            style={styles.button}>
-            <Text style={styles.textButton}>LOG IN</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
+      <Profile />
     );
   }
   else {

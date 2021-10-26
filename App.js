@@ -22,9 +22,20 @@ function App() {
     return (
         <NavigationContainer>
             <Tabs.Navigator>
-                <Tabs.Screen options={{ headerShown: false }} name="Home" component={Home} />
-                <Tabs.Screen options={{ headerShown: false }} name="Log" component={LogWeb} />
-                <Tabs.Screen options={{ headerShown: false}} name="Profile" component={Profile} />
+                <Tabs.Screen options={{ headerShown: false,
+                    tarBarIcon: ({focused}) => (
+                         <View>
+                             <Image source={require('./assets/home.png')}
+                                resizeMode = 'container'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                }}
+                             />
+                         </View>
+                    )  }} name="Home" component={Home} 
+                />
+                <Tabs.Screen options={{ headerShown: false }} name="Account" component={LogWeb} />
             </Tabs.Navigator>
         </NavigationContainer>
     )

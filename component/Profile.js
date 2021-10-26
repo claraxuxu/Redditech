@@ -1,37 +1,60 @@
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
-import Logweb from './LogWeb';
+import { StyleSheet, View, Text, Image } from 'react-native';
 
-const Profile = ({navigation}) => {
-    const getUser = async () => {
-        try {
-            const res = await fetch('https://oauth.reddit.com/api/v1/me', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + global.authState.accessToken,
-            }
-            });
-            const json = await res.json();
-            console.log(json)
-        }
-        catch(e) {
-            console.error(e);
-        }
-    }
+const Profile = ({ navigation }) => {
+    const img = global.resBody.icon_img
+    const [img1, rien] = img.split('?')
+    let img2 = {uri: img1};
+    console.log(img2);
+
     return (
-        <View style={styles.button}> 
-            <Button
-                title= 'fetch'
-                onPress= {() => {console.log(getUser())}}
-            />
+        <View style={styles.container}>
+            <View style={styles.pad} 
+                blurRadius={1}>
+                <Text style={styles.info}>Name : {global.resBody.name}</Text>
+                <Text style={styles.info}>Description : {global.resBody.subreddit.public_description}</Text>
+                <Text style={styles.info}>Friends : {global.resBody.num_friends}</Text>
+                <Text style={styles.info}>Karma : {global.resBody.link_karma}</Text>
+                <Text style={styles.info}>Coins : {global.resBody.coins}</Text>
+            </View>
+            <Image style={styles.pp} source={img2} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    button: {
-        marginTop: 50
+    container: {
+        flex: 1,
+        margin: 5,
+        alignItems: 'center'
+    },
+    pad: {
+        marginTop: 70,
+        width: 320,
+        height: 300,
+        backgroundColor: '#96CEEB',
+        borderRadius: 25,
+        alignItems: 'flex-start',
+        paddingTop: 30,
+        paddingLeft: 20
+    },
+    // pp: {
+    //     position: 'absolute',
+    //     width: 100,
+    //     height: 100
+    // },
+    pp: {
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        borderColor: "#000"
+    },
+    info: {
+        position: 'relative',
+        color: '#404040',
+        fontSize: 16,
+        marginTop: 10
     }
 });
 
