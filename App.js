@@ -25,24 +25,35 @@ function App() {
             <Tabs.Navigator>
                 <Tabs.Screen options={{ headerShown: false,
                     tabBarIcon: ({focused}) => (
-                             <Image source={require('./assets/home.png')}
+                        focused ?
+                            <Image source={require('./assets/home_click.png')}
                                 style={{
                                     width: 25,
                                     height: 25,
-                                }}
-                             />
-                    )  }} name="Home" component={Home} 
-                />
+                                }}/>
+                        :     
+                            <Image source={require('./assets/home.png')}
+                            style={{
+                                width: 25,
+                                height: 25,
+                            }}/>        
+                      )  }} name="Home" component={Home} />
                 <Tabs.Screen options={{ headerShown: false,
-                    tabBarIcon: ({focused}) => (
-                        <Image source={require('./assets/profile.png')}
-                        style={{
-                            width: 25,
-                            height: 25,
-                        }}
-                        />
-                    ) }} name="Account" component={LogWeb} />
-                </Tabs.Navigator>
+                    tabBarIcon: ({focused, color, size}) => (
+                        focused ?
+                            <Image source={require('./assets/profile_click.png')}
+                            style={{
+                                width: 25,
+                                height: 25,
+                            }}/>
+                        :
+                            <Image source={require('./assets/profile.png')}
+                            style={{
+                                width: 25,
+                                height: 25,
+                            }}/>
+                        ) }} name="Account" component={LogWeb} />
+            </Tabs.Navigator>
         </NavigationContainer>
     )
 }
