@@ -50,6 +50,7 @@ function SubReddit({ navigation }) {
     return (
         <View style={styles.container}>
           <View style={styles.inputView}>
+          {/* c'est ICI LES PBL~~A L'AIDE~~~ */}
             <TextInput 
               style={styles.inputText}
               placeholder="Searching..." 
@@ -58,13 +59,6 @@ function SubReddit({ navigation }) {
               defaultValue={''}
             >
             </TextInput>
-            <SearchBar
-              ref="searchBar"
-              placeholder="Search..."
-              onChangeText={text => setSubreddit(text)}
-              onSearchButtonPress={() => getTop()}
-              onCancelButtonPress={}
-            />
 
             <View style={styles.clickView}>
               <TouchableOpacity
