@@ -5,7 +5,6 @@ const Profile = ({ navigation }) => {
     const img = global.resBody.icon_img
     const [img1, rien] = img.split('?')
     let img2 = {uri: img1};
-    console.log(img2);
 
     return (
         <View style={styles.container}>
