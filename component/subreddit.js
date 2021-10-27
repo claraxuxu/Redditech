@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+    ScrollView,
     View,
     StyleSheet,
     Text,
@@ -7,37 +8,29 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
-import SearchBar from 'react-native-search-bar';
 import axios from 'react-native-axios';
+import { Card } from 'react-native-elements';
 import Home from './Home';
 
 function SubReddit({ navigation }) {
   const [isTopped, setTopped] = useState(false);
   const [subreddit, setSubreddit] = useState('');
 
-  // function getSub() {
-  //   const res = axios.get('https://www.reddit.com/r/Anime/about.json')
-  //   .then(function (response) {
-  //     global.subreddi = response;
-  //     console.log(subreddi);
-  //   })
-  //   .catch(function (error) {
-  //     // console.log(error);
-  //   });
-  // }
+  function getTop(subreddit) {
+      if (subreddit) {
+        axios.get('https://www.reddit.com/r/'+ subreddit +'/top.json?limit=10')
+        .then(function (response) {
+          global.top = response;
+          global.d = top.data.data.children
+          console.log(subreddit)
+          setTopped(true)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
 
-  function getTop() {
-      const subP = axios.get('https://www.reddit.com/r/'+ subreddit +'/top.json?limit=10')
-      .then(function (response) {
-        global.top = response;
-        global.d = top.data.data.children
-        setTopped(true)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-      const subC = axios.get('https://www.reddit.com/r/' + subreddit + '/about.json')
+      axios.get('https://www.reddit.com/r/' + subreddit + '/about.json')
       .then(function (response) {
         global.subCount = response.data.data.header_img;
         console.log(subCount);
@@ -50,39 +43,46 @@ function SubReddit({ navigation }) {
     return (
         <View style={styles.container}>
           <View style={styles.inputView}>
-          {/* c'est ICI LES PBL~~A L'AIDE~~~ */}
             <TextInput 
               style={styles.inputText}
               placeholder="Searching..." 
               placeholderTextColor="#E5E5E5"
-              onChangeText={text => setSubreddit(text)}
-              defaultValue={''}
+              onChangeText={(text) => setSubreddit(text)}
+              value={subreddit}
             >
             </TextInput>
 
             <View style={styles.clickView}>
-              <TouchableOpacity
-                onPress={() => getTop()}
-              >
+              {subreddit ?
+                <TouchableOpacity
+                  onPress={() => getTop(subreddit)}
+                >
                 <Image style={styles.icon} source={require('../assets/find.png')} />
               </TouchableOpacity>
+              : null}
             </View>
           </View>
+
           {global.d ? 
-            <View style={styles.info_box}>
-              <View>
+            <ScrollView style={styles.info_box}>
+              <View style={styles.info_subView}>
               {global.subCount ? 
                 <Image style={styles.jpgs} source={{uri: global.subCount}} />
               : null}
-                <Text style={styles.info_sub}> Subreddit {d[0].data.subreddit_name_prefixed}</Text>
-                {/* <Text key={index} style={styles.info_sub}> {item.data.thumbnail} </Text> */}
-                <Text style={styles.info_sub}> {d[0].data.subreddit_subscribers} Members</Text>
+                <View style={styles.info_text}>
+                  <Text style={styles.info_sub}> Subreddit: {d[0].data.subreddit_name_prefixed}</Text>
+                  <Text style={styles.info_sub}> {d[0].data.subreddit_subscribers} Members</Text>
+                </View>
               </View>
               {global.d.map((item, index) => (
-                  <Image style={styles.jpgs} key={index} source={{ uri: item.data.thumbnail }} />
+                <Card key={index}>
+                  <View style={styles.posts}>
+                    <Image style={styles.jpgs} key={index} source={{ uri: item.data.thumbnail }} />
+                  </View>
+                </Card>
                 )
               )}
-            </View>
+            </ScrollView>
           : <Home />}
         </View>
     );
@@ -93,8 +93,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  search: {
+    marginTop: '20%',
+    width: 300,
+  },
   inputView:{
-    marginTop: '10%',
+    marginTop: '3%',
     width:"80%",
     backgroundColor:"#465881",
     borderRadius:15,
@@ -108,12 +112,21 @@ const styles = StyleSheet.create({
     color: "#fff"
   },
   info_box: {
-    width: 300,
-    backgroundColor: "#465881"
+    width: "97%",
   },
   jpgs: {
-    width: 100,
-    height: 100,
+    width: 70,
+    height: 70,
+    resizeMode: 'contain'
+  },
+  info_subView: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  info_text: {
+    flexDirection: 'column'
   },
   info_sub: {
     color: "#000"
@@ -125,13 +138,10 @@ const styles = StyleSheet.create({
   icon: {
     width: 18,
     height: 18
+  },
+  posts: {
+    justifyContent: 'flex-end'
   }
 })
 
 export default SubReddit;
-
-
-/*ligne compilation vide
-l'ordre inverse
-
-*/
