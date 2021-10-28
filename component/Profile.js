@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
 const Profile = ({ navigation }) => {
     const img = global.resBody.icon_img
@@ -11,6 +11,11 @@ const Profile = ({ navigation }) => {
         <View style={styles.container}>
             <View style={styles.pad} 
                 blurRadius={1}>
+                <TouchableOpacity style={styles.editButton}>
+                {/* faire un popup de edit */}
+                    <Image style={styles.edit}
+                    source={require('../assets/edit.png')} />
+                </TouchableOpacity>
                 <Text style={styles.info}>Name : {global.resBody.name}</Text>
                 <Text style={styles.info}>Description : {global.resBody.subreddit.public_description}</Text>
                 <Text style={styles.info}>Friends : {global.resBody.num_friends}</Text>
@@ -35,14 +40,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#96CEEB',
         borderRadius: 25,
         alignItems: 'flex-start',
-        paddingTop: 30,
+        paddingTop: 10,
         paddingLeft: 20
     },
-    // pp: {
-    //     position: 'absolute',
-    //     width: 100,
-    //     height: 100
-    // },
+    editButton: {
+        marginLeft: "90%"
+    },
+    edit: {
+        width: 20,
+        height: 20,
+    },
     pp: {
         position: 'absolute',
         width: 100,
@@ -59,4 +66,3 @@ const styles = StyleSheet.create({
 });
 
 export default Profile;
-

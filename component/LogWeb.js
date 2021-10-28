@@ -38,9 +38,7 @@ const Logweb = ({ navigation }) => {
                 'Authorization': 'Bearer ' + global.authState.accessToken,
               }
             });
-            console.log(res)
             global.resBody = await res.json();
-            console.log(resBody)
             setLogged(true)
         }
         catch(e) {
