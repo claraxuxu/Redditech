@@ -1,13 +1,19 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Modal } from 'react-native';
 
 const Profile = ({ navigation }) => {
     const img = global.resBody.icon_img
     const [img1, rien] = img.split('?')
     let img2 = {uri: img1};
+    const [modalOpen, setModalOpen] = useState(false);
 
     return (
         <View style={styles.container}>
+            <Modal visible={false}>
+                <View style={styles.modalContent}>
+                    <Text>MODAL MODAL</Text>
+                </View>
+            </Modal>
             <View style={styles.pad} 
                 blurRadius={1}>
                 <TouchableOpacity style={styles.editButton}>

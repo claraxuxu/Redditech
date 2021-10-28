@@ -70,7 +70,7 @@ function SubReddit({ navigation }) {
                 <Image style={styles.jpgs} source={{uri: global.subCount}} />
               : null}
                 <View style={styles.info_text}>
-                  <Text style={styles.info_sub}> Subreddit: {d[0].data.subreddit_name_prefixed}</Text>
+                  <Text style={styles.info_sub}> {d[0].data.subreddit_name_prefixed}</Text>
                   <Text style={styles.info_sub}> {d[0].data.subreddit_subscribers} Members</Text>
                 </View>
               </View>
