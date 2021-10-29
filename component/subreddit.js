@@ -66,7 +66,7 @@ function SubReddit({ navigation }) {
             <View style={styles.clickView}>
               {subreddit ?
                 <TouchableOpacity
-                  onPress={() => getTop(subreddit)}
+                  onPress={() => {getTop(subreddit), setTopped(false)}}
                 >
                 <Image style={styles.icon} source={require('../assets/find.png')} />
               </TouchableOpacity>
