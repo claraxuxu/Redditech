@@ -20,23 +20,25 @@ function SubReddit({ navigation }) {
   const [filter, setFilter] = useState(filters[0])
 
   const getTop = async () => {
-    axios.get('https://www.reddit.com/r/'+ subreddit +'/' + filter + '.json?limit=10')
-    .then(function (response) {
-      global.top = response;
-      global.d = top.data.data.children
-      setTopped(true)
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    if (subreddit) {
+      const pos = axios.get('https://www.reddit.com/r/'+ subreddit +'/' + filter + '.json?limit=10')
+      .then(function (response) {
+        global.top = response;
+        global.d = top.data.data.children
+        setTopped(true)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
-    axios.get('https://www.reddit.com/r/' + subreddit + '/about.json')
-    .then(function (response) {
-      global.subCount = response.data.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      const info = axios.get('https://www.reddit.com/r/' + subreddit + '/about.json')
+      .then(function (response) {
+        global.subCount = response.data.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
   }
   useEffect(() => {
     getTop()
@@ -49,7 +51,9 @@ function SubReddit({ navigation }) {
               onPress={() => setTopped(false)}
               style={styles.backButton}
               >
+              {isTopped === true ? 
               <Image style={styles.back} source={require('../assets/back.png')} />
+              : null}
             </TouchableOpacity>
             <TextInput 
               style={styles.inputText}
@@ -77,6 +81,7 @@ function SubReddit({ navigation }) {
               {global.subCount ? 
                   <Image style={styles.jpgs} source={{uri: global.subCount.header_img}} />
               : null}
+              {d && global.subCount ? 
                 <View style={styles.info_text}>
                   <Text style={styles.info_sub}> {d[0].data.subreddit_name_prefixed}</Text>
                   <Text style={styles.info_sub}> {global.subCount.public_description}</Text>
@@ -92,6 +97,10 @@ function SubReddit({ navigation }) {
                     buttonTextStyle={styles.textDrop}
                   />
                 </View>
+              : <View>
+                  <Image style={styles.detective} source={require('../assets/404.png')} />
+                </View>
+              }
               </View>
               {global.d.map((item, index) => (
                 <Card key={index}>
@@ -107,7 +116,11 @@ function SubReddit({ navigation }) {
                 )
               )}
             </ScrollView>
-          : <Home />}
+          : 
+          <View>
+            <Image style={styles.detective} source={require('../assets/detective.png')} />
+          </View>
+          }
         </View>
     );
 }
@@ -150,8 +163,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   inputText: {
+    marginLeft: 20,
     height: 40,
-    width:"85%",
+    width:"75%",
     color: "#fff"
   },
   info_box: {
@@ -193,6 +207,12 @@ const styles = StyleSheet.create({
   },
   posts: {
     justifyContent: 'flex-end'
+  },
+  detective: {
+    marginTop: '30%',
+    width: 300,
+    height: 200,
+    resizeMode: 'contain'
   }
 })
 

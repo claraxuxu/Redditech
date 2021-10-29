@@ -25,20 +25,37 @@ function App() {
         <NavigationContainer>
             <Tabs.Navigator>
                 <Tabs.Screen options={{ headerShown: false,
-                    tabBarIcon: ({focused}) => (
+                    tabBarIcon: ({focused, color, size}) => (
                         focused ?
                             <Image source={require('./assets/home_click.png')}
-                                style={{
-                                    width: 25,
-                                    height: 25,
-                                }}/>
-                        :     
+                            style={{
+                                width: 25,
+                                height: 25,
+                            }}/>
+                        :
                             <Image source={require('./assets/home.png')}
                             style={{
                                 width: 25,
                                 height: 25,
+                            }}/>
+                        ) }} name="Home" component={Home} />
+
+                <Tabs.Screen options={{ headerShown: false,
+                    tabBarIcon: ({focused}) => (
+                        focused ?
+                            <Image source={require('./assets/search_blue.png')}
+                                style={{
+                                    width: 30,
+                                    height: 30,
+                                }}/>
+                        :     
+                            <Image source={require('./assets/search_black.png')}
+                            style={{
+                                width: 25,
+                                height: 25,
                             }}/>        
-                      )  }} name="Home" component={SubReddit} />
+                      )  }} name="Search" component={SubReddit} />
+                
                 <Tabs.Screen options={{ headerShown: false,
                     tabBarIcon: ({focused, color, size}) => (
                         focused ?
