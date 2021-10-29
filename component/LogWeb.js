@@ -39,6 +39,7 @@ const Logweb = ({ navigation }) => {
               }
             });
             global.resBody = await res.json();
+            console.log(resBody)
             setLogged(true)
         }
         catch(e) {

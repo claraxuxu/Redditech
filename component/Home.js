@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
   }, [filter])
   if (isLoaded === true)
     return (
-      <View>
+      <View style={{alignItems: "center"}}>
         <SelectDropdown
         data = {filters}
         onSelect={(selectedItem, index) => {
@@ -39,6 +39,8 @@ const Home = ({ navigation }) => {
           setLoaded(false)
         }}
         defaultValue= {filter}
+        buttonStyle={styles.drop}
+        buttonTextStyle={styles.textDrop}
         />
         <ScrollView>
           {global.elem.map((item, index) => (
@@ -80,6 +82,16 @@ const styles = StyleSheet.create({
   inputText: {
     color: 'black',
     margin: 10
+  },
+  drop: {
+    width: 70,
+    height: 40,
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: "#B3C7D1"
+  },
+  textDrop: {
+    fontSize: 16
   },
   voteContainer:{
     justifyContent: 'space-around'
