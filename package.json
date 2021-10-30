@@ -27,7 +27,8 @@
     "react-native-select-dropdown": "^1.2.0",
     "react-native-vector-icons": "^9.0.0",
     "react-navigation": "^4.4.4",
-    "react-navigation-stack": "^2.10.4"
+    "react-navigation-stack": "^2.10.4",
+    "react-select-country-list": "^2.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",

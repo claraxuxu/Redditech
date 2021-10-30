@@ -55,8 +55,10 @@ const Home = ({ navigation }) => {
                       <Image source={require('../assets/up.png')} style={styles.voteImg}/>
                       {item.data.score}
                       <Image source={require('../assets/down.png')} style={styles.voteImg}/>
-                      {item.data.num_comments}
+                    </Text>
+                    <Text style={styles.voteText}>
                       <Image source={require('../assets/comment.png')} style={styles.voteImg}/>
+                      {item.data.num_comments}
                     </Text>
                   </View>
                 </View>
@@ -94,7 +96,8 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   voteContainer:{
-    justifyContent: 'space-around'
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   voteImg: {
     height: 17,

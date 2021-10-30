@@ -21,7 +21,7 @@ function SubReddit({ navigation }) {
 
   const getTop = async () => {
     if (subreddit) {
-      const pos = axios.get('https://www.reddit.com/r/'+ subreddit +'/' + filter + '.json?limit=10')
+      const pos = axios.get('https://www.reddit.com/r/'+ subreddit +'/' + filter + '.json?limit=50')
       .then(function (response) {
         global.top = response;
         global.d = top.data.data.children
@@ -108,9 +108,19 @@ function SubReddit({ navigation }) {
                     <Text style={styles.title}> {item.data.title} </Text>
                     <Text style={styles.des}> Publie par {item.data.author} </Text>
                     {item.data.thumbnail ?
-                      <Image style={styles.jpgs} key={index} source={{ uri: item.data.thumbnail }} />
+                      <Image style={{width: item.data.thumbnail_width, height: item.data.thumbnail_height,resizeMode: 'contain'}} key={index} source={{ uri: item.data.thumbnail }} />
                     : null}
-                    <Text style={styles.info_sub}> {item.data.num_comments} comments</Text>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                      <Text style={styles.info_sub}>
+                        <Image source={require('../assets/up.png')} style={styles.voteImg}/>
+                        {item.data.score}
+                        <Image source={require('../assets/down.png')} style={styles.voteImg}/>
+                      </Text>
+                      <Text style={styles.info_sub}>
+                        <Image source={require('../assets/comment.png')} style={styles.voteImg}/>
+                        {item.data.num_comments}
+                      </Text>
+                    </View>
                   </View>
                 </Card>
                 )
@@ -197,6 +207,11 @@ const styles = StyleSheet.create({
   },
   info_sub: {
     color: "#000"
+  },
+  voteImg: {
+    height: 17,
+    width: 17,
+    padding: 10,
   },
   clickView: {
     marginTop: '4%'

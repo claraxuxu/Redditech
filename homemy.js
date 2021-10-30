@@ -17,7 +17,6 @@ function Home({ navigation }) {
     const res = axios.get('https://www.reddit.com/r/Anime/about.json')
     .then(function (response) {
       global.subreddi = response;
-      console.log(subreddi);
     })
     .catch(function (error) {
       console.log(error);

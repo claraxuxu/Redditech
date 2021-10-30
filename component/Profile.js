@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Modal, TextInput, Switch } from 'react-native';
-import axios from 'react-native-axios';
-import LinearGradient from 'react-native-linear-gradient';
+import { StyleSheet, View, Text, Image } from 'react-native';
+import Settings from './setting';
 
 const Infos = () => {
     return (
@@ -34,68 +33,15 @@ const Infos = () => {
     );
 }
 
-const Profile = ({ navigation }) => {
+const Profile = () => {
     const img = global.resBody.icon_img
     const [img1, rien] = img.split('?')
     let img2 = {uri: img1};
-    const [modalOpen, setModalOpen] = useState(false);
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     return (
         <View style={styles.container}>
-            <Modal visible={modalOpen} animationType='slide'>
-                <View style={styles.modalContent}>
-                    <View style={styles.button}>
-                        <TouchableOpacity
-                        style={styles.modalBut}
-                        onPress={() => setModalOpen(false)}>
-                            <Text style={styles.saveText}>Back</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                        style={styles.modalBut}
-                        onPress={() => setModalOpen(false)}>
-                            <Text style={styles.saveText}>Save</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.changeBar}>
-                        <Text  style={styles.info}>Name :</Text>
-                        <TextInput 
-                            placeholder={global.resBody.name}
-                            placeholderTextColor="#E5E5E5"
-                            style={styles.changeInput}
-                        />
-                    </View>
-                    <View style={styles.changeBar}>
-                        <Text style={styles.info}>Description : </Text>
-                        <TextInput 
-                            placeholder={global.resBody.subreddit.public_description}
-                            placeholderTextColor="#E5E5E5"
-                            style={styles.changeInput}
-                        />
-                    </View>
-                    <View style={styles.changeBar}>
-                        <Text style={styles.info}>Over18? : </Text>
-                        <Switch
-                            trackColor={{ false: "#767577", true: "#81b0ff" }}
-                            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={toggleSwitch}
-                            value={isEnabled}
-                        >
-                        </Switch>
-                    </View>
-                </View>
-            </Modal>
             <View style={styles.pad}>
                 <View style={styles.middle}>
-                    <TouchableOpacity
-                        onPress={() => setModalOpen(true)}
-                        style={styles.editButton}>
-                        <Image style={styles.edit}
-                        source={require('../assets/edit.png')} />
-                    </TouchableOpacity>
                     <Text style={styles.info}>{global.resBody.subreddit.display_name_prefixed}</Text>
                     <Text style={styles.des}>{global.resBody.subreddit.public_description}</Text>
                     <View style={styles.numbers}>
@@ -112,9 +58,7 @@ const Profile = ({ navigation }) => {
                     <Text style={styles.info}>{ global.resBody.subreddit.subscribers} Followers</Text>
                 </View>
                 <Infos />
-                <TouchableOpacity style={styles.setbutton}>
-                    <Text style={styles.settextButton}>Setting</Text>
-                </TouchableOpacity>
+                <Settings />
             </View>
             <Image style={styles.pp} source={img2} />
         </View>
@@ -230,21 +174,6 @@ const styles = StyleSheet.create({
         color: '#1C3A70',
         fontSize: 16,
         marginTop: 5,
-    },
-    setbutton : {
-        marginTop: '30%',
-        width: 320,
-        height: 50,
-        borderRadius: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: "#CBD6EA"
-    },
-    settextButton: {
-        fontSize: 16,
-        letterSpacing: 1.5,
-        textAlign: 'center',
-        color: '#1C3A70'
     },
 });
 
