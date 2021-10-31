@@ -2,15 +2,16 @@ import React, { useState, useCallback } from 'react';
 import { authorize } from 'react-native-app-auth';
 import { Image, TouchableOpacity, 
           View, Text, StyleSheet,
-          StatusBar } from 'react-native';
+          StatusBar, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Profile from './Profile';
+import Pdf from 'react-native-pdf';
 
 const config = {
   redirectUrl: 'com.epicture://oauth2redirect/reddit',
   clientId: 'QzIXD5c6dy5sVJC_Yy81pg',
   clientSecret: '', // empty string - needed for iOS
-  scopes: ['identity'],
+  scopes: ['identity', 'mysubreddits', 'edit'],
   serviceConfiguration: {
     authorizationEndpoint: 'https://www.reddit.com/api/v1/authorize.compact',
     tokenEndpoint: 'https://www.reddit.com/api/v1/access_token',
@@ -25,6 +26,7 @@ const config = {
 const Logweb = ({ navigation }) => {
 
   const [isLogged, setLogged] = useState(false);
+  const [isPDF, setPDF] = useState(false);
   const getToken = useCallback(
     async lave => {
         try {
@@ -51,7 +53,19 @@ const Logweb = ({ navigation }) => {
       <Profile />
     );
   }
-  else {
+
+  else if (isPDF === true) {
+    return (
+      <View>
+        <Text style={{color: "#000", fontSize: 16}} onPress={() => setPDF(false)}>back</Text>
+        <Pdf
+          source={{uri: "https://maipdf.com/pdf/?e=enec5Os6Y9Cmg6"}}
+          onError={(error)=>{console.log(error);}}
+          style={styles.pdf}
+        />
+      </View>
+    )
+  } else {
     return (
       <View style={styles.container}>
         <StatusBar
@@ -74,8 +88,10 @@ const Logweb = ({ navigation }) => {
         </TouchableOpacity>
 
         <Text style={styles.signin}>
-            By continuing you agree to our {"\n"}
-            User Agreement and Privacy Policy{"\n"}
+            By continuing you agree to our
+        </Text>
+        <Text style={styles.signin} onPress={() => setPDF(true)}>
+            User Agreement and Private Policy
         </Text>
       </View>
     );
@@ -114,12 +130,15 @@ const styles = StyleSheet.create({
     color: '#FFFFFF'
   },
   signin: {
-    marginTop: 15,
-    marginBottom: '5%',
+    marginTop: 5,
     fontSize: 13,
     textAlign: 'center',
-    color: '#fff'
+    color: '#000'
   },
+  pdf: {
+    width:Dimensions.get('window').width,
+    height:Dimensions.get('window').height,
+  }
 });
 
 export default Logweb;
