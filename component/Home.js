@@ -1,18 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
     View,
     StyleSheet,
     ScrollView,
     Image,
-    Text
+    Text,
+    TouchableOpacity
 } from 'react-native';
+import axios from 'react-native-axios';
 import { Card } from 'react-native-elements';
 import SelectDropdown from 'react-native-select-dropdown';
+import Abonne from './abonne';
 
 const Home = ({ navigation }) => {
     const [isLoaded, setLoaded] = useState(false);
-    const filters =['top', 'hot', 'new', 'best']
-    const [filter, setFilter] = useState(filters[0])
+    const [isAbonned, setAbonned] = useState(false);
+    const filters =['top', 'hot', 'new', 'best'];
+    const [filter, setFilter] = useState(filters[0]);
     const getPostNoLog = async () => { 
       try {
           const res = await fetch("https://www.reddit.com/r/all/" + filter + ".json?limit=50", {
@@ -26,22 +30,55 @@ const Home = ({ navigation }) => {
           console.error(e);
       }
   }
+  const getToken = useCallback(
+    async lave => {
+        try {
+            var l = [];
+            const res1 = await fetch('https://oauth.reddit.com/subreddits/mine/', {
+              credentials: 'include',
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer ' + global.authState.accessToken,
+              }
+            });
+            global.resSub = await res1.json();
+            global.child = resSub.data.children;
+            {global.child.map((item, i) => (
+              l.push(item.data.display_name)
+            ))}
+            global.l = l;
+            setAbonned(true);
+            setLoaded(false);
+        }
+        catch(e) { console.log(e) }
+    },
+  )
+
   useEffect(() => {
     getPostNoLog()
   }, [filter])
-  if (isLoaded === true)
+  if (isLoaded === true) {
     return (
-      <View style={{alignItems: "center"}}>
-        <SelectDropdown
-        data = {filters}
-        onSelect={(selectedItem, index) => {
-          setFilter(filters[index])
-          setLoaded(false)
-        }}
-        defaultValue= {filter}
-        buttonStyle={styles.drop}
-        buttonTextStyle={styles.textDrop}
-        />
+      <View style={{alignItems: "center", flex: 1, marginTop: 20}}>
+        <View style={styles.top}>
+          <SelectDropdown
+            data = {filters}
+            onSelect={(selectedItem, index) => {
+              setFilter(filters[index])
+              setLoaded(false)
+            }}
+            defaultValue= {filter}
+            buttonStyle={styles.drop}
+            buttonTextStyle={styles.textDrop}
+          />
+
+          <TouchableOpacity style={styles.drop}
+          onPress={()=> getToken()}>
+            <Text style={{color: "#000", fontSize: 15}}>Followed</Text>
+          </TouchableOpacity>
+        </View>
+
         <ScrollView>
           {global.elem.map((item, index) => (
             <Card key={index}>
@@ -68,15 +105,24 @@ const Home = ({ navigation }) => {
         </ScrollView>
       </View>
     );
-  else
+  } else if (isAbonned === true) {
+    return( 
+      <Abonne />
+    );
+  }
+  else {
     return (
-      <View>
-        
-      </View>
+      null
     )
+  }
 }
 
 const styles = StyleSheet.create({
+  top: {
+    flexDirection: 'row',
+    width: "90%",
+    justifyContent: 'space-between'
+  },
   author:{
     color: 'grey',
     textAlign: 'right'
@@ -86,14 +132,16 @@ const styles = StyleSheet.create({
     margin: 10
   },
   drop: {
-    width: 70,
+    width: 85,
     height: 40,
     borderRadius: 10,
     padding: 10,
-    backgroundColor: "#B3C7D1"
+    backgroundColor: "#B3C7D1",
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   textDrop: {
-    fontSize: 16
+    fontSize: 15
   },
   voteContainer:{
     justifyContent: 'space-between',

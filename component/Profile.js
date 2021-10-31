@@ -71,30 +71,6 @@ const styles = StyleSheet.create({
         margin: 5,
         alignItems: 'center'
     },
-    button: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        margin: 10
-    },
-    changeBar: {
-        margin: 10,
-        flexDirection: 'row',
-        width: 300,
-    },
-    changeItem: {
-        marginTop: 13
-    },
-    changeInput: {
-        margin: 5,
-        height: 40,
-        borderBottomWidth: 1,
-        borderBottomColor: "#404040"
-    },
-    saveText: {
-        color: "#000",
-        fontWeight: 'bold',
-        fontSize: 15
-    },
     pad: {
         marginTop: 90,
         width: 320,
@@ -110,9 +86,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         paddingTop: 20,
         marginLeft: 20
-    },
-    editButton: {
-        marginLeft: "90%"
     },
     edit: {
         width: 20,

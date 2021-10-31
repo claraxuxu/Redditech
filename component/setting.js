@@ -23,17 +23,41 @@ function Setting({ navigation }) {
                   }
                 });
                 global.prefs = await res.json();
-                console.log(prefs)
+            }
+            catch(e) { console.log(e) }
+        },
+    );
+    const Modif = useCallback (
+        async hihi => {
+            try {
+                const mod = fetch('https://oauth.reddit.com/api/v1/me/prefs', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': 'Bearer ' + global.authState.accessToken,
+                    },
+                    body : {
+                        "over_18" : true,
+                    }
+                });
             }
             catch(e) { console.log(e) }
         },
     );
     const [setOpen, setSetOpen] = useState(false);
-
+    const over18 = () => {
+        Modif();
+        {global.prefs.over_18 === true ?
+            console.log("OUI")
+        : console.log("NO")};
+        setSetOpen(false);
+    };
     const demande = () => {
         setSetOpen(true); getSetting();
     };
-
+    useEffect(() => {
+        getSetting()
+    })
     if (setOpen === false) {
         return (
             <TouchableOpacity
@@ -58,16 +82,18 @@ function Setting({ navigation }) {
                             <Text> </Text>
                         </View>
                     </View>
-                    <View style={styles.settingInfo}>
-                        <SelectDrop />
-                        <SwitchView />
-                        <TouchableOpacity
-                            style={styles.SetSave}
-                            onPress={() => setSetOpen(false)}
-                        >
-                            <Text style={styles.settextButton}>Save   Changement</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {global.prefs ?
+                        <View style={styles.settingInfo}>
+                                <SelectDrop />
+                                <SwitchView />
+                            <TouchableOpacity
+                                style={styles.SetSave}
+                                onPress={() => over18()}
+                            >
+                                <Text style={styles.settextButton}>Save   Changement</Text>
+                            </TouchableOpacity>
+                        </View>
+                    : null}
                 </Modal>
             </View>
         );

@@ -6,18 +6,19 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    Image
+    Image,
+    Dimensions
 } from 'react-native';
 import axios from 'react-native-axios';
 import { Card } from 'react-native-elements';
-import Home from './Home';
 import SelectDropdown from 'react-native-select-dropdown';
 
-function SubReddit({ navigation }) {
+function SubReddit() {
   const [isTopped, setTopped] = useState(false);
   const [subreddit, setSubreddit] = useState('');
   const filters =['top', 'hot', 'new', 'best']
   const [filter, setFilter] = useState(filters[0])
+  const {width, height} = Dimensions.get("screen");
 
   const getTop = async () => {
     if (subreddit) {
@@ -25,12 +26,12 @@ function SubReddit({ navigation }) {
       .then(function (response) {
         global.top = response;
         global.d = top.data.data.children
+
         setTopped(true)
       })
       .catch(function (error) {
         console.log(error);
       });
-
       const info = axios.get('https://www.reddit.com/r/' + subreddit + '/about.json')
       .then(function (response) {
         global.subCount = response.data.data;
@@ -73,7 +74,6 @@ function SubReddit({ navigation }) {
               : null}
             </View>
           </View>
-          
 
           {isTopped === true ? 
             <ScrollView style={styles.info_box}>
@@ -127,9 +127,9 @@ function SubReddit({ navigation }) {
               )}
             </ScrollView>
           : 
-          <View>
-            <Image style={styles.detective} source={require('../assets/detective.png')} />
-          </View>
+            <View>
+              <Image style={styles.detective} source={require('../assets/detective.png')} />
+            </View>
           }
         </View>
     );
