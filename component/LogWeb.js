@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { authorize } from 'react-native-app-auth';
 import { Image, TouchableOpacity, 
           View, Text, StyleSheet,
@@ -21,7 +20,7 @@ const config = {
       Authorization: 'Basic UXpJWEQ1YzZkeTVzVkpDX1l5ODFwZw==',
     },
   },
-};
+};  
 
 const Logweb = ({ navigation }) => {
 
@@ -39,7 +38,6 @@ const Logweb = ({ navigation }) => {
               }
             });
             global.resBody = await res.json();
-            console.log(resBody)
             setLogged(true)
         }
         catch(e) {
@@ -48,7 +46,7 @@ const Logweb = ({ navigation }) => {
     },
   )
 
-  if (isLogged === true) {
+  if (isLogged) {
     return (
       <Profile />
     );
